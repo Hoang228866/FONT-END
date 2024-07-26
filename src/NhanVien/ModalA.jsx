@@ -13,30 +13,21 @@ import {
 import React, { useState } from "react";
 const { Option } = Select;
 function ModalA({ onActionSuccess }) {
-    const [id, setid] = useState('')
-
-    const [so_dien_thoai, setso_dien_thoai] = useState('')
-    const [ten_day_du, setten_day_du] = useState('')
-    const [tai_khoan, settai_khoan] = useState('')
-    const [mat_khau, setmat_khau] = useState('')
+    const [sdt, setSDT] = useState('')
+    const [tenDayDu, setTenDayDu] = useState('')
     const [email, setemail] = useState('')
-    const [ngay_sinh, setngay_sinh] = useState('')
-    const [anh, setanh] = useState('')
-    const [quyen, setquyen] = useState('')
-    const [ngay_tao, setngay_tao] = useState('')
-    const [dia_chi, setdia_chi] = useState('')
-    const [manv, setmanv] = useState('')
-
-    const [trang_thai, settrang_thai] = useState('')
+    const [ngaySinh, setNgaySinh] = useState('')
+    // const [anh, setanh] = useState('')
+    const [gioiTinh, setGioiTinh] = useState('')
 
     const handleClick = (e) => {
         e.preventDefault()
         // Kiểm tra từng trường và hiển thị thông báo lỗi
-        if (!ten_day_du || ten_day_du.trim() === "") {
+        if (!tenDayDu || tenDayDu.trim() === "") {
             openNotification("error", "Lỗi", "Tên đầy đủ không được để trống", "bottomRight");
             return;
         }
-        if (!so_dien_thoai || so_dien_thoai.trim() === "") {
+        if (!sdt || sdt.trim() === "") {
             openNotification("error", "Lỗi", "Số điện thoại  được để trống", "bottomRight");
             return;
         }
@@ -53,23 +44,9 @@ function ModalA({ onActionSuccess }) {
             return;
         }
 
-        // if (!anh || anh.trim() === "") {
-        //     openNotification("error", "Lỗi", "Ảnh không  được để trống", "bottomRight");
-        //     return;
-        // }
 
 
-
-        // if (!soluong) {
-        //     openNotification("error", "Lỗi", "Số lượng không được để trống", "bottomRight");
-        //     return;
-        // } else if (isNaN(soluong) || soluong <= 0) {
-        //     openNotification("error", "Lỗi", "Số lượng phải là một số dương lớn hơn 0!", "bottomRight");
-        //     return;
-
-        // }
-
-        const khachHang = { id, so_dien_thoai, ten_day_du, tai_khoan, mat_khau, email, ngay_sinh, anh, quyen, ngay_tao, dia_chi, manv }
+        const khachHang = { sdt, tenDayDu, email, ngaySinh }
 
         fetch("http://localhost:8080/nv/add", {
             method: "POST",
@@ -122,133 +99,116 @@ function ModalA({ onActionSuccess }) {
     return (
         <>
             {contextHolder}
-            <div
+
+
+
+            <Form
+                name="wrap"
+                labelCol={{
+                    flex: "110px",
+                }}
+                labelAlign="left"
+                labelWrap
+                wrapperCol={{
+                    flex: 1,
+                }}
+                colon={false}
                 style={{
-                    marginLeft: "4px",
-                    marginRight: "4px",
+
+                    maxWidth: 600,
                 }}
             >
-                <Tooltip title="ADD" onClick={showModal}>
+
+                <Form.Item
+                    label="Số Điện Thoại"
+                    name="Số Điện Thoại"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        value={sdt}
+                        onChange={(e) => setSDT(e.target.value)}
+
+                    />
+                </Form.Item>
+
+
+                <Form.Item
+                    label="Tên Đầy Đủ"
+                    name="Tên Đầy Đủ"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        value={tenDayDu}
+                        onChange={(e) => setTenDayDu(e.target.value)}
+
+                    />
+                </Form.Item>
+                <Form.Item
+                    label="Email"
+                    name="Email"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        value={email}
+                        onChange={(e) => setemail(e.target.value)}
+
+                    />
+                </Form.Item>
+                <Form.Item
+                    label="Ngày sinh"
+                    name="Ngày sinh"
+                    rules={[
+                        { required: true, message: 'Vui lòng chọn ngày' },
+
+                    ]}
+                >
+                    <DatePicker
+                        format="YYYY-MM-DD"
+                        value={ngaySinh ? ngaySinh : null}
+                        onChange={(date) => setNgaySinh(date)}
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    label="Giới Tính"
+                    name="Giới Tính"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        value={gioiTinh}
+                        onChange={(e) => setGioiTinh(e.target.value)}
+
+                    />
+                </Form.Item>
+                <Form.Item label=" ">
                     <Button
                         type="primary"
+                        htmlType="submit"
 
-
-                    >Thêm dữ liệu</Button>
-                </Tooltip>
-                <Modal
-                    okButtonProps={{ style: { display: "none" } }}
-                    cancelButtonProps={{ style: { display: "none" } }}
-                    title="Thêm Nhân Viên Mới"
-                    open={isModalOpen}
-                    onCancel={handleCancel}
-                    centered
-                >
-                    <Form
-                        name="wrap"
-                        labelCol={{
-                            flex: "110px",
-                        }}
-                        labelAlign="left"
-                        labelWrap
-                        wrapperCol={{
-                            flex: 1,
-                        }}
-                        colon={false}
-                        style={{
-                            maxWidth: 600,
-                        }}
+                        onClick={handleClick}
                     >
-                        {/* <Form.Item
-                            label="Id"
-                            name="Id"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input
-                                value={id}
-                                onChange={(e) => setid(e.target.value)}
+                        Thêm
+                    </Button>
+                </Form.Item>
 
-                            />
-                        </Form.Item> */}
+            </Form>
 
-                        <Form.Item
-                            label="Số Điện Thoại"
-                            name="Số Điện Thoại"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input
-                                value={so_dien_thoai}
-                                onChange={(e) => setso_dien_thoai(e.target.value)}
-
-                            />
-                        </Form.Item>
-
-
-                        <Form.Item
-                            label="Tên Đầy Đủ"
-                            name="Tên Đầy Đủ"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input
-                                value={ten_day_du}
-                                onChange={(e) => setten_day_du(e.target.value)}
-
-                            />
-                        </Form.Item>
-                        <Form.Item
-                            label="Email"
-                            name="Email"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input
-                                value={email}
-                                onChange={(e) => setemail(e.target.value)}
-
-                            />
-                        </Form.Item>
-                        <Form.Item
-                            label="Ngày sinh"
-                            name="Ngày sinh"
-                            rules={[
-                                { required: true, message: 'Vui lòng chọn ngày' },
-
-                            ]}
-                        >
-                            <DatePicker
-                                format="YYYY-MM-DD"
-                                value={ngay_sinh ? ngay_sinh : null}
-                                onChange={(date) => setngay_sinh(date)}
-                            />
-                        </Form.Item>
-
-                        <Form.Item label=" ">
-                            <Button
-                                type="primary"
-                                htmlType="submit"
-
-                                onClick={handleClick}
-                            >
-                                Thêm
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Modal>
-            </div>
         </>
     );
 }

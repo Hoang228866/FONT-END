@@ -142,16 +142,16 @@ export default function Product() {
         },
         {
             title: 'Số Điện Thoại',
-            dataIndex: 'so_dien_thoai',
-            key: 'so_dien_thoai',
-            ...getColumnSearchProps('so_dien_thoai'),
+            dataIndex: 'soDienThoai',
+            key: 'soDienThoai',
+            ...getColumnSearchProps('soDienThoai'),
         },
 
 
         {
             title: 'Tên Đầy Đủ',
-            dataIndex: 'ten_day_du',
-            key: 'ten_day_du',
+            dataIndex: 'tenDayDu',
+            key: 'tenDayDu',
         },
 
         // {
@@ -175,39 +175,26 @@ export default function Product() {
 
         {
             title: 'Ngày Sinh',
-            dataIndex: 'ngay_sinh',
-            key: 'ngay_sinh',
+            dataIndex: 'ngaySinh',
+            key: 'ngaySinh',
         },
 
         {
             title: 'Giới Tính',
-            dataIndex: 'gioi_tinh',
-            key: 'gioi_tinh',
+            dataIndex: 'gioiTinh',
+            key: 'gioiTinh',
         },
-        // {
-        //     title: 'Địa Chỉ',
-        //     dataIndex: 'dia_chi',
-        //     key: 'dia_chi',
-        //     filters: [
-        //         { text: 'Hà Nội', value: 'HàNội' },
-        //         { text: 'Hà Giang', value: 'HàGiang' },
-        //     ],
-        //     onFilter: (value, record) => record.dia_chia === value,
-        //     render: (text) => {
-        //         const { color, text: statusText } = getadress(text);
-        //         return <Tag color={color}>{statusText}</Tag>;
-        //     },
-        // },
+
         {
             title: 'Địa Chỉ',
-            dataIndex: 'dia_chi',
-            key: 'dia_chi',
+            dataIndex: 'diaChi',
+            key: 'diaChi',
         },
         {
 
             title: 'Trạng thái',
-            dataIndex: 'trang_thai',
-            key: 'trang_thai',
+            dataIndex: 'trangThai',
+            key: 'trangThai',
             filters: [
                 { text: 'Hoạt Động', value: 'HOẠTĐỘNG' },
                 { text: 'Không Hoạt Động', value: 'KHÔNGHOẠTĐỘNG' },

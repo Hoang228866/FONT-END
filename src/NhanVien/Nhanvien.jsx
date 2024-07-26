@@ -6,7 +6,7 @@ import axios from 'axios';
 import ModalA from './ModalA';
 import ModalD from './ModalD';
 import ModalU from './ModalU';
-
+import { useNavigate } from 'react-router-dom';
 
 const { Search } = Input;
 
@@ -18,6 +18,7 @@ export default function Staf() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const [resetTable, setResetTable] = useState(false);
+    const navigate = useNavigate();
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -27,14 +28,18 @@ export default function Staf() {
     };
     const getStatusProps = (status) => {
         switch (status) {
-            case 'HOẠTĐỘNG':
+            case 'HOAT_DONG':
                 return { color: 'blue', text: 'Hoạt động' };
-            case 'KHÔNGHOẠTĐỘNG':
+            case 'KHONG_HOAT_DONG':
                 return { color: 'red', text: 'Không hoạt động' };
             default:
                 return { color: 'gray', text: 'Chưa xác định' };
         }
     };
+    const handleAddClick = () => {
+        navigate('/NhanVien/add');
+    };
+
 
     const handleReset = (clearFilters) => {
         clearFilters();
@@ -117,16 +122,16 @@ export default function Staf() {
         },
         {
             title: 'Số Điện Thoại',
-            dataIndex: 'so_dien_thoai',
-            key: 'so_dien_thoai',
+            dataIndex: 'sdt',
+            key: 'sdt',
             ...getColumnSearchProps('so_dien_thoai'),
         },
 
 
         {
             title: 'Tên Đầy Đủ',
-            dataIndex: 'ten_day_du',
-            key: 'ten_day_du',
+            dataIndex: 'tenDayDu',
+            key: 'tenDayDu',
         },
         {
             title: 'Email',
@@ -136,23 +141,23 @@ export default function Staf() {
 
         {
             title: 'Ngày Sinh',
-            dataIndex: 'ngay_sinh',
-            key: 'ngay_sinh',
+            dataIndex: 'ngaySinh',
+            key: 'ngaySinh',
         },
 
-        // {
-        //     title: 'Giới Tính',
-        //     dataIndex: 'gt',
-        //     key: 'gt',
-        // },
+        {
+            title: 'Giới Tính',
+            dataIndex: 'gt',
+            key: 'gt',
+        },
         {
 
             title: 'Trạng thái',
-            dataIndex: 'trang_thai',
-            key: 'trang_thai',
+            dataIndex: 'trangThai',
+            key: 'trangThai',
             filters: [
-                { text: 'Hoạt Động', value: 'HOẠTĐỘNG' },
-                { text: 'Không Hoạt Động', value: 'KHÔNGHOẠTĐỘNG' },
+                { text: 'Hoạt Động', value: 'HOAT_DONG' },
+                { text: 'Không Hoạt Động', value: 'KHONG_HOAT_DONG' },
             ],
             onFilter: (value, record) => record.trangthai === value,
             render: (text) => {
@@ -227,7 +232,11 @@ export default function Staf() {
                     }}>
 
 
-                    <ModalA onActionSuccess={reloadstafs} />
+                    <div>
+                        <Button type="primary" onClick={handleAddClick}>
+                            Thêm Nhân Viên
+                        </Button>
+                    </div>
 
 
                 </div>
