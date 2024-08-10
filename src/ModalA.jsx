@@ -1,5 +1,8 @@
 // import "./style.css";
 import { useNavigate } from 'react-router-dom';
+
+
+
 import {
     Button,
     Form,
@@ -29,6 +32,11 @@ function ModalA({ onActionSuccess }) {
     const [trangThai, settrangThai] = useState('')
 
     const navigate = useNavigate();
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
+    const [selectedProvince, setSelectedProvince] = useState('');
+    const [selectedDistrict, setSelectedDistrict] = useState('');
     const handleClick = (e) => {
         e.preventDefault()
         // Kiểm tra từng trường và hiển thị thông báo lỗi
@@ -45,16 +53,12 @@ function ModalA({ onActionSuccess }) {
             openNotification("error", "Lỗi", "Email không  được để trống", "bottomRight");
             return;
         }
-        if (!diaChi || diaChi.trim() === "") {
-            openNotification("error", "Lỗi", "Địa Chỉ không  được để trống", "bottomRight");
-            return;
-        }
 
 
 
 
 
-        const khachHang = { id, soDienThoai, tenDayDu, taiKhoan, matKhau, email, ngaySinh, anh, gioiTinh, diaChi }
+        const khachHang = { id, soDienThoai, tenDayDu, email, ngaySinh, anh, gioiTinh, diaChi, provinces, districts }
 
         fetch("http://localhost:8080/kh/add", {
             method: "POST",
@@ -105,6 +109,49 @@ function ModalA({ onActionSuccess }) {
             });
         }
     };
+
+
+
+
+    // Fetch provinces
+    fetch('https://esgoo.net/api-tinhthanh/1/0.htm')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error === 0) {
+                setProvinces(data.data);
+            }
+        });
+
+
+    const handleProvinceChange = (e) => {
+        const provinceId = e.target.value;
+        setSelectedProvince(provinceId);
+
+        // Fetch districts
+        fetch(`https://esgoo.net/api-tinhthanh/2/${provinceId}.htm`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error === 0) {
+                    setDistricts(data.data);
+                    setWards([]); // Reset wards
+                }
+            });
+    };
+
+    const handleDistrictChange = (e) => {
+        const districtId = e.target.value;
+        setSelectedDistrict(districtId);
+
+        // Fetch wards
+        fetch(`https://esgoo.net/api-tinhthanh/3/${districtId}.htm`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error === 0) {
+                    setWards(data.data);
+                }
+            });
+    };
+
 
     return (
         <>
@@ -203,18 +250,42 @@ function ModalA({ onActionSuccess }) {
 
                 <Form.Item
                     label="Địa Chỉ"
-                    name="Địa Chỉ"
-                    rules={[
-                        {
-                            required: true,
-                        },
-                    ]}
+                    name="Dịa Chỉ"
+                    rules={[{ required: true, message: 'Vui lòng chọn giới tính' }]}
                 >
-                    <Input
-                        value={diaChi}
-                        onChange={(e) => setdiaChi(e.target.value)}
 
-                    />
+
+
+
+                    <select className="css_select" value={selectedProvince} onChange={handleProvinceChange} title="Chọn Tỉnh Thành">
+                        <option value="0">Tỉnh Thành</option>
+                        {provinces.map(province => (
+                            <option key={province.id} value={province.id}>
+                                {province.full_name}
+                            </option>
+                        ))}
+                    </select>
+
+                    <select className="css_select" value={selectedDistrict} onChange={handleDistrictChange} title="Chọn Quận Huyện">
+                        <option value="0">Quận Huyện</option>
+                        {districts.map(district => (
+                            <option key={district.id} value={district.id}>
+                                {district.full_name}
+                            </option>
+                        ))}
+                    </select>
+
+                    <select className="css_select" title="Chọn Phường Xã">
+                        <option value="0">Phường Xã</option>
+                        {wards.map(ward => (
+                            <option key={ward.id} value={ward.id}>
+                                {ward.full_name}
+                            </option>
+                        ))}
+                    </select>
+
+
+
                 </Form.Item>
 
 

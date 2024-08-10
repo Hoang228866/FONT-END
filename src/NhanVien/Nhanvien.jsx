@@ -3,7 +3,7 @@ import { Input, Table, Button, message, Tag, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
 import axios from 'axios';
-import ModalA from './ModalA';
+// import ModalA from './ModalA';
 import ModalD from './ModalD';
 import ModalU from './ModalU';
 import { useNavigate } from 'react-router-dom';
@@ -28,9 +28,9 @@ export default function Staf() {
     };
     const getStatusProps = (status) => {
         switch (status) {
-            case 'HOAT_DONG':
+            case 'HOẠTĐỘNG':
                 return { color: 'blue', text: 'Hoạt động' };
-            case 'KHONG_HOAT_DONG':
+            case 'KHÔNGHOẠTĐỘNG':
                 return { color: 'red', text: 'Không hoạt động' };
             default:
                 return { color: 'gray', text: 'Chưa xác định' };
@@ -124,7 +124,7 @@ export default function Staf() {
             title: 'Số Điện Thoại',
             dataIndex: 'sdt',
             key: 'sdt',
-            ...getColumnSearchProps('so_dien_thoai'),
+            ...getColumnSearchProps('sdt'),
         },
 
 
@@ -132,6 +132,16 @@ export default function Staf() {
             title: 'Tên Đầy Đủ',
             dataIndex: 'tenDayDu',
             key: 'tenDayDu',
+        },
+        {
+            title: 'Tài Khoản',
+            dataIndex: 'taiKhoan',
+            key: 'taiKhoan',
+        },
+        {
+            title: 'Mật Khẩu ',
+            dataIndex: 'matKhau',
+            key: 'matKhau',
         },
         {
             title: 'Email',
@@ -151,13 +161,29 @@ export default function Staf() {
             key: 'gt',
         },
         {
+            title: 'Địa Chỉ',
+            dataIndex: 'diaChi',
+            key: 'diaChi',
+        },
+        {
+            title: 'Ngày Tạo',
+            dataIndex: 'ngayTao',
+            key: 'ngayTao',
+        },
+        {
+            title: 'Mã NV',
+            dataIndex: 'maNhanVien',
+            key: 'maNhanVien',
+        },
+
+        {
 
             title: 'Trạng thái',
             dataIndex: 'trangThai',
             key: 'trangThai',
             filters: [
-                { text: 'Hoạt Động', value: 'HOAT_DONG' },
-                { text: 'Không Hoạt Động', value: 'KHONG_HOAT_DONG' },
+                { text: 'Hoạt Động', value: 'HOẠTĐỘNG' },
+                { text: 'Không Hoạt Động', value: 'KHÔNGHOẠTĐỘNG' },
             ],
             onFilter: (value, record) => record.trangthai === value,
             render: (text) => {
@@ -234,7 +260,7 @@ export default function Staf() {
 
                     <div>
                         <Button type="primary" onClick={handleAddClick}>
-                            Thêm Nhân Viên
+                            Thêm Mới
                         </Button>
                     </div>
 

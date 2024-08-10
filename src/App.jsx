@@ -5,7 +5,15 @@ import Product from './Product';
 
 import MenuAdmin from './Menu';
 import Nhanvien from './NhanVien/Nhanvien';
+
 import ModalA from './ModalA';
+
+import Modal1 from './NhanVien/ModalA';
+
+
+
+
+
 
 const breadcrumbNameMap = {
   '/KhacHang': 'Khách Hàng',
@@ -14,7 +22,9 @@ const breadcrumbNameMap = {
   '/promotions': 'Khuyến mãi',
   '/vouchers': 'Phiếu giảm giá',
   '/NhanVien': 'Nhân viên',
+  '/NhanVien/add': 'Thêm Nhân Viên',
   '/orders': 'Đơn hàng',
+
 };
 const Breadcrumbs = () => {
   const location = useLocation();
@@ -54,8 +64,8 @@ const App = () => {
             {/* <Route path="/" element={<MenuAdmin />} /> */}
             <Route path="/KhachHang" element={<Product />} />
             <Route path="/KhachHang/add" element={<ModalA />} />
-            <Route path="/NhanVien" element={<Nhanvien />} />
-            <Route path="/NhanVien/add" element={<ModalA />} />
+            <Route path="/NhanVien" element={<Address />} />
+            <Route path="/NhanVien/add" element={<Modal1 />} />
             {/* <Route path="/vouchers" element={<Voucher />} />
             <Route path="/stafs" element={<Staf />} />
             <Route path="/orders" element={<Order />} /> */}

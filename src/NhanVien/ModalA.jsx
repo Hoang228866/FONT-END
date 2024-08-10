@@ -1,4 +1,5 @@
 // import "./style.css";
+import { useNavigate } from 'react-router-dom';
 import {
     Button,
     Form,
@@ -13,13 +14,21 @@ import {
 import React, { useState } from "react";
 const { Option } = Select;
 function ModalA({ onActionSuccess }) {
-    const [sdt, setSDT] = useState('')
-    const [tenDayDu, setTenDayDu] = useState('')
+    const [sdt, setsdt] = useState('')
+    const [tenDayDu, settenDayDu] = useState('')
+    const [taiKhoan, settaiKhoan] = useState('')
+    const [matKhau, setmatKhau] = useState('')
     const [email, setemail] = useState('')
-    const [ngaySinh, setNgaySinh] = useState('')
+    const [ngaySinh, setngaySinh] = useState('')
     // const [anh, setanh] = useState('')
-    const [gioiTinh, setGioiTinh] = useState('')
+    const [gt, setgt] = useState('')
+    const [diaChi, setdiaChi] = useState('')
+    const [quyen, setquyen] = useState('')
+    const [anh, setanh] = useState('')
+    const [maNhanVien, setmaNhanVien] = useState('')
+    const [ngayTao, setngayTao] = useState('')
 
+    const navigate = useNavigate();
     const handleClick = (e) => {
         e.preventDefault()
         // Kiểm tra từng trường và hiển thị thông báo lỗi
@@ -46,12 +55,12 @@ function ModalA({ onActionSuccess }) {
 
 
 
-        const khachHang = { sdt, tenDayDu, email, ngaySinh }
+        const NhanVien = { sdt, tenDayDu, taiKhoan, matKhau, email, ngaySinh, anh, quyen, ngayTao, gt, diaChi }
 
         fetch("http://localhost:8080/nv/add", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(khachHang)
+            body: JSON.stringify(NhanVien)
         }).then(() => {
             if (typeof onActionSuccess === 'function') {
                 onActionSuccess();
@@ -60,9 +69,9 @@ function ModalA({ onActionSuccess }) {
             openNotification("success", "Hệ thống", "Thêm Thành công", "bottomRight");
 
             setIsModalOpen(false);
-            onActionSuccess();
+            // onActionSuccess();
             console.log("New sanPhamAdded")
-
+            navigate('/NhanVien');
 
         })
             .catch((error) => {
@@ -101,23 +110,16 @@ function ModalA({ onActionSuccess }) {
             {contextHolder}
 
 
-
             <Form
                 name="wrap"
-                labelCol={{
-                    flex: "110px",
-                }}
+                labelCol={{ flex: "100px" }}
                 labelAlign="left"
                 labelWrap
-                wrapperCol={{
-                    flex: 1,
-                }}
+                wrapperCol={{ flex: 1 }}
                 colon={false}
-                style={{
+                style={{ maxWidth: "50%", backgroundColor: '#FFFFFF', padding: '16px', color: '#fff' }} >
 
-                    maxWidth: 600,
-                }}
-            >
+
 
                 <Form.Item
                     label="Số Điện Thoại"
@@ -130,7 +132,7 @@ function ModalA({ onActionSuccess }) {
                 >
                     <Input
                         value={sdt}
-                        onChange={(e) => setSDT(e.target.value)}
+                        onChange={(e) => setsdt(e.target.value)}
 
                     />
                 </Form.Item>
@@ -147,10 +149,13 @@ function ModalA({ onActionSuccess }) {
                 >
                     <Input
                         value={tenDayDu}
-                        onChange={(e) => setTenDayDu(e.target.value)}
+                        onChange={(e) => settenDayDu(e.target.value)}
 
                     />
                 </Form.Item>
+
+
+
                 <Form.Item
                     label="Email"
                     name="Email"
@@ -177,13 +182,28 @@ function ModalA({ onActionSuccess }) {
                     <DatePicker
                         format="YYYY-MM-DD"
                         value={ngaySinh ? ngaySinh : null}
-                        onChange={(date) => setNgaySinh(date)}
+                        onChange={(date) => setngaySinh(date)}
                     />
                 </Form.Item>
+
+
 
                 <Form.Item
                     label="Giới Tính"
                     name="Giới Tính"
+                    rules={[{ required: true, message: 'Vui lòng chọn giới tính' }]}
+                >
+                    <Select value={gt} onChange={(value) => setgt(value)}>
+                        <Option value="Nam">Nam</Option>
+                        <Option value="Nữ">Nữ</Option>
+                    </Select>
+                </Form.Item>
+
+
+
+                <Form.Item
+                    label="Địa Chỉ"
+                    name="Địa Chỉ"
                     rules={[
                         {
                             required: true,
@@ -191,11 +211,18 @@ function ModalA({ onActionSuccess }) {
                     ]}
                 >
                     <Input
-                        value={gioiTinh}
-                        onChange={(e) => setGioiTinh(e.target.value)}
+                        value={diaChi}
+                        onChange={(e) => setdiaChi(e.target.value)}
 
                     />
                 </Form.Item>
+
+
+
+
+
+
+
                 <Form.Item label=" ">
                     <Button
                         type="primary"
@@ -207,7 +234,10 @@ function ModalA({ onActionSuccess }) {
                     </Button>
                 </Form.Item>
 
+
+
             </Form>
+
 
         </>
     );

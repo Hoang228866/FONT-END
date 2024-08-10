@@ -156,16 +156,16 @@ export default function Product() {
 
         // {
         //     title: 'Tài Khoản ',
-        //     dataIndex: 'tai_khoan',
-        //     key: 'tai_khoan',
+        //     dataIndex: 'taiKhoan',
+        //     key: 'taiKhoan',
 
         // },
 
 
         // {
         //     title: 'Mật Khẩu',
-        //     dataIndex: 'mat_khau',
-        //     key: 'mat_khau',
+        //     dataIndex: 'matKhau',
+        //     key: 'matKhau',
         // },
         {
             title: 'Email',

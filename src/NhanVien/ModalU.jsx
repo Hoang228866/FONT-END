@@ -7,12 +7,14 @@ import {
     Form,
     Input,
     Modal,
+
     Tooltip,
     Select,
     notification,
     Space
 } from "antd";
 import axios from 'axios';
+const { Option } = Select;
 const ModalU = ({ recordId, onActionSuccess }) => {
 
     const [api, contextHolder] = notification.useNotification();
@@ -59,10 +61,10 @@ const ModalU = ({ recordId, onActionSuccess }) => {
         const errors = [];
 
 
-        if (!editsanPhamData.so_dien_thoai) {
+        if (!editsanPhamData.sdt) {
             errors.push("Vui số điện thoai !");
         }
-        if (!editsanPhamData.ten_day_du) {
+        if (!editsanPhamData.tenDayDu) {
             errors.push("Vui lòng nhập tên đầy đủ !");
         }
         // if (!editsanPhamData.tai_khoan) {
@@ -74,7 +76,7 @@ const ModalU = ({ recordId, onActionSuccess }) => {
         if (!editsanPhamData.email) {
             errors.push("Vui lòng nhập email");
         }
-        if (!editsanPhamData.ngay_sinh) {
+        if (!editsanPhamData.ngaySinh) {
             errors.push("Vui lòng nhập ngày sinh !");
         }
 
@@ -114,17 +116,18 @@ const ModalU = ({ recordId, onActionSuccess }) => {
 
             // Cập nhật state để hiển thị dữ liệu trên form
             setEditsanPhamData({
-                so_dien_thoai: data.so_dien_thoai,
-                ten_day_du: data.ten_day_du,
+                sdt: data.sdt,
+                tenDayDu: data.tenDayDu,
                 tai_khoan: data.tai_khoan,
                 mat_khau: data.mat_khau,
                 email: data.email,
-                ngay_sinh: data.ngay_sinh,
+                ngaySinh: data.ngaySinh,
                 anh: data.anh,
                 quyen: data.quyen,
                 ngay_tao: data.ngay_tao,
-                dia_chi: data.dia_chi,
+                diaChi: data.diaChi,
                 manv: data.manv,
+                gt: data.gt
 
             });
         } catch (error) {
@@ -166,9 +169,9 @@ const ModalU = ({ recordId, onActionSuccess }) => {
                         style={{ flex: '1' }}
                         size="medium"
                         placeholder="Số điện thoại "
-                        value={editsanPhamData.so_dien_thoai}
+                        value={editsanPhamData.sdt}
                         onChange={(e) => {
-                            setEditsanPhamData({ ...editsanPhamData, so_dien_thoai: e.target.value })
+                            setEditsanPhamData({ ...editsanPhamData, sdt: e.target.value })
                         }
                         } />
                 </div>
@@ -180,9 +183,9 @@ const ModalU = ({ recordId, onActionSuccess }) => {
                         style={{ flex: '1' }}
                         size="medium"
                         placeholder="Tên đầy đủ "
-                        value={editsanPhamData.ten_day_du}
+                        value={editsanPhamData.tenDayDu}
                         onChange={(e) => {
-                            setEditsanPhamData({ ...editsanPhamData, ten_day_du: e.target.value })
+                            setEditsanPhamData({ ...editsanPhamData, tenDayDu: e.target.value })
                         }
                         } />
                 </div>
@@ -236,14 +239,27 @@ const ModalU = ({ recordId, onActionSuccess }) => {
                         style={{ flex: '1' }}
                         size="medium"
                         placeholder="Ngày Sinh "
-                        value={editsanPhamData.ngay_sinh}
+                        value={editsanPhamData.ngaySinh}
                         onChange={(e) => {
-                            setEditsanPhamData({ ...editsanPhamData, ngay_sinh: e.target.value })
+                            setEditsanPhamData({ ...editsanPhamData, ngaySinh: e.target.value })
                         }
                         } />
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <h3 style={{ color: 'rgb(252, 40, 72)', marginRight: '5px' }}>*</h3>
+                    <span style={{ marginRight: '10px' }}>Giới tính :</span>
+                    <Select
+                        style={{ flex: '1' }}
+                        value={editsanPhamData.gt}
+                        onChange={(value) => setEditsanPhamData({ ...editsanPhamData, gt: value })}
+                    >
+                        <Option value="Nam">Nam</Option>
+                        <Option value="Nữ">Nữ</Option>
+                    </Select>
+                </div>
+
+                {/* <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                     <h3 style={{ color: 'rgb(252, 40, 72)', marginRight: '5px' }}>*</h3>
                     <span style={{ marginRight: '10px' }}>Ảnh :</span>
                     <Input
@@ -255,8 +271,8 @@ const ModalU = ({ recordId, onActionSuccess }) => {
                             setEditsanPhamData({ ...editsanPhamData, anh: e.target.value })
                         }
                         } />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                </div> */}
+                {/* <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                     <h3 style={{ color: 'rgb(252, 40, 72)', marginRight: '5px' }}>*</h3>
                     <span style={{ marginRight: '10px' }}>Ngày Tạo :</span>
                     <Input
@@ -268,7 +284,7 @@ const ModalU = ({ recordId, onActionSuccess }) => {
                             setEditsanPhamData({ ...editsanPhamData, ngay_tao: e.target.value })
                         }
                         } />
-                </div>
+                </div> */}
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                     <h3 style={{ color: 'rgb(252, 40, 72)', marginRight: '5px' }}>*</h3>
                     <span style={{ marginRight: '10px' }}>Địa Chỉ :</span>
@@ -276,9 +292,9 @@ const ModalU = ({ recordId, onActionSuccess }) => {
                         style={{ flex: '1' }}
                         size="medium"
                         placeholder="Địa Chỉ "
-                        value={editsanPhamData.dia_chi}
+                        value={editsanPhamData.diaChi}
                         onChange={(e) => {
-                            setEditsanPhamData({ ...editsanPhamData, dia_chi: e.target.value })
+                            setEditsanPhamData({ ...editsanPhamData, diaChi: e.target.value })
                         }
                         } />
                 </div>
